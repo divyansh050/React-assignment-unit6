@@ -46,7 +46,7 @@ const ResponsiveAppBar = () => {
               component="div"
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
             >
-              HOME
+              Population List
             </Typography>
           </Link>
 
@@ -95,7 +95,7 @@ const ResponsiveAppBar = () => {
               component="div"
               sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
             >
-              Home
+              Population List
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -111,7 +111,7 @@ const ResponsiveAppBar = () => {
               </Link>
             ))}
           </Box>
-{/*
+          {/*
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
