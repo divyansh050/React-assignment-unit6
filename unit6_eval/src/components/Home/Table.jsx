@@ -41,7 +41,7 @@ export default function CustomizedTables() {
   const [rows, setRows] = React.useState([]);
 
   const fetchData = () => {
-    axios.get("http://localhost:8080/city").then((res) => {
+    axios.get("https://json-server-050.herokuapp.com/city").then((res) => {
       setRows([...res.data]);
     });
   };
@@ -53,9 +53,11 @@ export default function CustomizedTables() {
   }, []);
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8080/city/${id}`).then((res) => {
-      fetchData();
-    });
+    axios
+      .delete(`https://json-server-050.herokuapp.com/city/${id}`)
+      .then((res) => {
+        fetchData();
+      });
   };
 
   const handleSort = (value) => {

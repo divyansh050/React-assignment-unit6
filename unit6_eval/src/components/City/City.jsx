@@ -10,10 +10,11 @@ export const City = () => {
 
     useEffect(() => {
       
-        axios.get("http://localhost:8080/country").then(res => {
-            
+        axios
+          .get("https://json-server-050.herokuapp.com/country")
+          .then((res) => {
             setCntryData([...res.data]);
-        })
+          });
     
       return () => {
         
@@ -39,15 +40,16 @@ export const City = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
 
-      axios.post("http://localhost:8080/city", City).then(res => {
-       
-        console.log(res.data);
-        setCity({
-          city: "",
-          country: "",
-          population: "",
+      axios
+        .post("https://json-server-050.herokuapp.com/city", City)
+        .then((res) => {
+          console.log(res.data);
+          setCity({
+            city: "",
+            country: "",
+            population: "",
+          });
         });
-      })
       console.log(City);
     };
 

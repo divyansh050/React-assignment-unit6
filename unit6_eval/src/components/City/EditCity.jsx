@@ -7,13 +7,15 @@ export const EditCity = () => {
  
 
   useEffect(() => {
-    axios.get("http://localhost:8080/country").then((res) => {
+    axios.get("https://json-server-050.herokuapp.com/country").then((res) => {
       setCntryData([...res.data]);
     });
 
-    axios.get(`http://localhost:8080/city/${id}`).then((res) => {
-        setCity({...res.data});
-    })
+    axios
+      .get(`https://json-server-050.herokuapp.com/city/${id}`)
+      .then((res) => {
+        setCity({ ...res.data });
+      });
 
     return () => {};
   }, []);
@@ -36,14 +38,16 @@ export const EditCity = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://localhost:8080/city/${id}`, City).then((res) => {
-      console.log(res.data);
-      setCity({
-        city: "",
-        country: "",
-        population: "",
+    axios
+      .put(`https://json-server-050.herokuapp.com/city/${id}`, City)
+      .then((res) => {
+        console.log(res.data);
+        setCity({
+          city: "",
+          country: "",
+          population: "",
+        });
       });
-    });
     console.log(City);
   };
 
