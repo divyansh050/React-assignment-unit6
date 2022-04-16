@@ -88,14 +88,16 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            LOGO
-          </Typography>
+          <Link to="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            >
+              Home
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Link to={`/add-${page}`}>
@@ -109,7 +111,7 @@ const ResponsiveAppBar = () => {
               </Link>
             ))}
           </Box>
-
+{/*
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -139,6 +141,7 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
+              */}
         </Toolbar>
       </Container>
     </AppBar>
