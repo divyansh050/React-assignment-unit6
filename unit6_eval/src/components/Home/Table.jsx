@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 // import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -52,13 +53,20 @@ export default function CustomizedTables() {
     return () => {};
   }, []);
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const handleDelete = (id) => {
+    setIsLoading(id);
     axios
       .delete(`https://json-server-050.herokuapp.com/city/${id}`)
       .then((res) => {
+        setIsLoading(false);
         fetchData();
+
       });
   };
+
+
 
   const handleSort = (value) => {
     let sorted = [...rows];
@@ -84,56 +92,100 @@ export default function CustomizedTables() {
 
   return (
     <>
-      <div style={{margin:"10px 0px 10px 0px"}}>
+      <div style={{ margin: "10px 0px 10px 0px" }}>
         <TextField
           type="text"
           onChange={handleFilterChange}
           placeholder="Search..."
         />
-        <Button sx={{m:1}} variant="outlined" onClick={() => handleSort("asc")}>
+        <Button
+          sx={{ m: 1 }}
+          variant="outlined"
+          onClick={() => handleSort("asc")}
+        >
           Sort Ascending
         </Button>
-        <Button sx={{m:1}} variant="outlined" onClick={() => handleSort("dsc")}>
+        <Button
+          sx={{ m: 1 }}
+          variant="outlined"
+          onClick={() => handleSort("dsc")}
+        >
           Sort descending
         </Button>
-        <Button sx={{m:1}} variant="outlined" onClick={() => fetchData()}>
+        <Button sx={{ m: 1 }} variant="outlined" onClick={() => fetchData()}>
           Reset
         </Button>
       </div>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700,textTransform: "capitalize" }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>ID </StyledTableCell>
-              <StyledTableCell>Country</StyledTableCell>
-              <StyledTableCell>City</StyledTableCell>
-              <StyledTableCell>Population</StyledTableCell>
-              <StyledTableCell>Edit</StyledTableCell>
-              <StyledTableCell>Delete</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row, i) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell component="th" scope="row">
-                  {i + 1}
-                </StyledTableCell>
-                <StyledTableCell>{row.country}</StyledTableCell>
-                <StyledTableCell>{row.city}</StyledTableCell>
-                <StyledTableCell>{row.population}</StyledTableCell>
+      {!rows[0] ? (
+        <div>Loading...</div>
+      ) :  (
+        <TableContainer component={Paper}>
+          <Table
+            sx={{ minWidth: 700, textTransform: "capitalize" }}
+            aria-label="customized table"
+          >
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>ID </StyledTableCell>
+                <StyledTableCell>Country</StyledTableCell>
+                <StyledTableCell>City</StyledTableCell>
+                <StyledTableCell>Population</StyledTableCell>
+                <StyledTableCell>Edit</StyledTableCell>
+                <StyledTableCell>Delete</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, i) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell component="th" scope="row">
+                    {i + 1}
+                  </StyledTableCell>
+                  <StyledTableCell>{row.country}</StyledTableCell>
+                  <StyledTableCell>{row.city}</StyledTableCell>
+                  <StyledTableCell>{row.population}</StyledTableCell>
 
-                <StyledTableCell>
-                  <Link to={`/add-city/${row.id}`}>{"Edit"}</Link>
-                </StyledTableCell>
+                  <StyledTableCell>
+                    <Link to={`/add-city/${row.id}`}>{"Edit"}</Link>
+                  </StyledTableCell>
 
-                <StyledTableCell onClick={() => handleDelete(row.id)}>
-                  {"Delete"}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                  <StyledTableCell onClick={() => handleDelete(row.id)}>
+                    <LoadingButton loading={row.id==isLoading}>
+                      {"Delete"}
+                    </LoadingButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )  }
     </>
   );
 }
+
+/*import * as React from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
+import Stack from '@mui/material/Stack';
+
+export default function LoadingButtons() {
+  return (
+    <Stack direction="row" spacing={2}>
+      <LoadingButton loading variant="outlined">
+        Submit
+      </LoadingButton>
+      <LoadingButton loading loadingIndicator="Loading..." variant="outlined">
+        Fetch data
+      </LoadingButton>
+      <LoadingButton
+        loading
+        loadingPosition="start"
+        startIcon={<SaveIcon />}
+        variant="outlined"
+      >
+        Save
+      </LoadingButton>
+    </Stack>
+  );
+}
+ */
