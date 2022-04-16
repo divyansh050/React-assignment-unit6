@@ -39,11 +39,16 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 export default function CustomizedTables() {
+  const [fetching, setFetching] = React.useState(false);
+  
   const [rows, setRows] = React.useState([]);
 
+
   const fetchData = () => {
+    setFetching(true);
     axios.get("https://json-server-050.herokuapp.com/city").then((res) => {
       setRows([...res.data]);
+      setFetching(false);
     });
   };
 
@@ -116,9 +121,9 @@ export default function CustomizedTables() {
           Reset
         </Button>
       </div>
-      {!rows[0] ? (
+      {fetching ? (
         <div>Loading...</div>
-      ) :  (
+      ) : rows[0] ?  (
         <TableContainer component={Paper}>
           <Table
             sx={{ minWidth: 700, textTransform: "capitalize" }}
@@ -158,34 +163,10 @@ export default function CustomizedTables() {
             </TableBody>
           </Table>
         </TableContainer>
-      )  }
+      )  : (
+        <div>No data</div>
+      ) }
     </>
   );
 }
 
-/*import * as React from 'react';
-import LoadingButton from '@mui/lab/LoadingButton';
-import SaveIcon from '@mui/icons-material/Save';
-import Stack from '@mui/material/Stack';
-
-export default function LoadingButtons() {
-  return (
-    <Stack direction="row" spacing={2}>
-      <LoadingButton loading variant="outlined">
-        Submit
-      </LoadingButton>
-      <LoadingButton loading loadingIndicator="Loading..." variant="outlined">
-        Fetch data
-      </LoadingButton>
-      <LoadingButton
-        loading
-        loadingPosition="start"
-        startIcon={<SaveIcon />}
-        variant="outlined"
-      >
-        Save
-      </LoadingButton>
-    </Stack>
-  );
-}
- */
